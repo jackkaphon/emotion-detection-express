@@ -6,9 +6,11 @@ class UserService {
     }
 
     async getAllUsersByRole(role) {
+        // Get users by role and join createdBy with user info
         return await User.find({
-            role: role
-        });
+            role: role,
+
+        }).populate('createdBy').exec();
     }
 
     async getUserById(id) {
@@ -34,8 +36,8 @@ class UserService {
         });
     }
 
-    async createUser(name, password, email, role, image) {
-        const newUser = new User({ name, password, email, role, image });
+    async createUser(name, password, email, role, image, createdBy) {
+        const newUser = new User({ name, password, email, role, image, createdBy });
         await newUser.save();
         return newUser;
     }

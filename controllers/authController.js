@@ -1,5 +1,5 @@
 const axios = require('axios');
-const path = require('path');
+// const path = require('path');
 const fs = require('fs');
 const FormData = require('form-data');
 
@@ -84,10 +84,11 @@ class AuthController {
             }
 
             // Save user to database
-            const user = await UserService.createUser(name, hashPassword, email, role, file.filename);
+            const user = await UserService.createUser(name, hashPassword, email, role, file.filename, null);
 
             return apiResponse.success(res, 200, 'Register success', user);
         } catch (error) {
+            fs.unlinkSync(req.file.path)
             next(error);
         }
     }

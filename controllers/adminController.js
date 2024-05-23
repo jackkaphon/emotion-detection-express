@@ -32,7 +32,7 @@ class AdminController {
             const { name, password, email } = req.body;
             const role = 'admin';
             const hashPassword = await encryption.hashPassword(password);
-            const newAdmin = await UserService.createUser(name, hashPassword, email, role);
+            const newAdmin = await UserService.createUser(name, hashPassword, email, role, null, null);
             return apiResponse.success(res, 200, 'Create admin success', newAdmin);
         } catch (error) {
             next(error);

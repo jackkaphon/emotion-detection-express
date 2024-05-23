@@ -32,7 +32,7 @@ class TeacherController {
             const { name, password, email } = req.body;
             const role = 'teacher';
             const hashPassword = await encryption.hashPassword(password);
-            const newTeacher = await UserService.createUser(name, hashPassword, email, role);
+            const newTeacher = await UserService.createUser(name, hashPassword, email, role, null, req.user.id);
             return apiResponse.success(res, 200, 'Create teacher success', newTeacher);
         } catch (error) {
             next(error);
