@@ -93,6 +93,8 @@ router.post('/', authenticateToken, upload.single('video'), (req, res) => {
         video.save().then((savedVideo) => {
             const faceEmotionData = JSON.parse(faceEmotionHistory);
 
+            console.log('Face emotion data:', faceEmotionData);
+
             faceEmotionData.forEach(async (faceEmotion) => {
                 try {
                     // Assuming Student model has a field 'name' for the student's name
@@ -129,5 +131,25 @@ router.post('/', authenticateToken, upload.single('video'), (req, res) => {
     });
 });
 
+router.delete('/:id', authenticateToken, async (req, res) => {
+    try {
+        const videoId = req.params.id;
+        const video = await Video.findById(videoId);
+
+        if (!video) {
+            return apiResponse.error(res, 404, 'Video not found');
+        }
+
+        if (video.createdBy.toString() !== req.user.id) {
+            return apiResponse.error(res, 403, 'Forbidden, you can only delete your own videos');
+        }
+
+        await video.remove();
+        return apiResponse.success(res, 200, 'Video deleted successfully');
+    } catch (err) {
+        console.error('Error deleting video:', err);
+        res.status(500).send('Server error');
+    }
+});
 
 module.exports = router;

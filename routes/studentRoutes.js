@@ -18,9 +18,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/', authenticateToken, StudentController.getAllStudents);
+router.get('/profile', authenticateToken, StudentController.getProfile);
 router.get('/:id', authenticateToken, StudentController.getStudentById);
 router.post('/', authenticateToken, upload.single('file'), StudentController.createStudent);
 router.put('/:id', authenticateToken, StudentController.updateStudent);
 router.delete('/:id', authenticateToken, StudentController.deleteStudent);
+
 
 module.exports = router;

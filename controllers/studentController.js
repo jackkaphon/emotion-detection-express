@@ -111,6 +111,20 @@ class StudentController {
             next(error);
         }
     }
+
+    async getProfile(req, res, next) {
+        try {
+            const student = await UserService.getUserById(req.user.id);
+
+            if (!student) {
+                return apiResponse.error(res, 404, 'Student not found');
+            }
+
+            return apiResponse.success(res, 200, 'Get student profile success', student);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new StudentController();

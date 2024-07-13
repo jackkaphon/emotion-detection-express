@@ -9,6 +9,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const videoRoutes = require('./routes/videoRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/admins', adminRoutes);
 app.use('/teachers', teacherRoutes);
 app.use('/students', studentRoutes);
 app.use('/videos', videoRoutes);
+app.use('/images', imageRoutes);
 
 // Use the error handling middleware
 app.use(errorHandling);
